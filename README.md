@@ -3,7 +3,7 @@
 ## Introduction
 
 **SubzzZ**
-SubzzZ to find possible subdomains using passive recon. Tool also support Permutations, Mutations, Alterations.
+to find possible subdomains using passive recon. Tool also support Permutations, Mutations, Alterations.
 
 ## Features
 - [✔] Crt.sh 
