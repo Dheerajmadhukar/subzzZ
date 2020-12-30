@@ -10,6 +10,8 @@ to find possible subdomains using passive recon. Tool also support Permutations,
 
 ## Passive Recon via:
 
+[&#9745] lol
+
  [✔] Crt.sh 
  [✔] Web.Archive.org 
  [✔] Dns.bufferover.run 
