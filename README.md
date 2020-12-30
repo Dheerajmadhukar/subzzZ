@@ -64,7 +64,7 @@ can find possible subdomains using passive recon. Tool also support Permutations
 ## Usage
 ```
 root@me_dheeraj:$ bash subzzZ
-[-] Usage: ./subzzZ [-d/--domain] hackerone.com
+[-] Usage: ./subzzZ [-d/--domain] target.com
 
 Output will be saved in scans/target.com-YYYY-MM-DD directory
 ```
