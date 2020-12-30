@@ -9,8 +9,11 @@
 to find possible subdomains using passive recon. Tool also support Permutations, Mutations, Alterations.
 
 ## Passive Recon via:
+
 [&#9745;] llll
-[&#9745;] llll222
+
+[&#9745;] llll1
+
 
 - [✔] Crt.sh 
 - [✔] Web.Archive.org 
