@@ -6,8 +6,8 @@
 to find possible subdomains using passive recon. Tool also support Permutations, Mutations, Alterations.
 
 ## Passive Recon via:
-- [✔] Crt.sh 
-- [✔] Web.Archive.org 
+ [✔] Crt.sh \n
+ [✔] Web.Archive.org \n
 - [✔] Dns.bufferover.run 
 - [✔] Threatcrowd.org 
 - [✔] Hackertarget.com 
