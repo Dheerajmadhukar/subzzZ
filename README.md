@@ -1,5 +1,5 @@
 [![License](https://img.shields.io/badge/license-MIT-_red.svg)](https://opensource.org/licenses/MIT)
-
+[![Follow on Twitter](https://img.shields.io/twitter/follow/pdnuclei.svg?logo=twitter)](https://twitter.com/Dheerajmadhukar)
 
 <a href="https://www.buymeacoffee.com/medheeraj"><img src="https://img.buymeacoffee.com/button-api/?text=Buy me a beer&emoji=🍺&slug=medheeraj&button_colour=FFDD00&font_colour=000000&font_family=Cookie&outline_colour=000000&coffee_colour=ffffff"></a>
 
@@ -9,23 +9,6 @@
 to find possible subdomains using passive recon. Tool also support Permutations, Mutations, Alterations.
 
 ## Passive Recon via:
-[✔] Crt.sh
-[✔] Web.Archive.org
-[✔] Dns.bufferover.run
-[✔] Threatcrowd.org
-[✔] Hackertarget.com
-[✔] Certspotter.com
-[✔] Anubis-DB(jonlu.ca)
-[✔] Virustotal
-[✔] Alienvault(otx)
-[✔] Urlscan.io
-[✔] Threatminer
-[✔] Entrust.com
-[✔] Riddler.io
-[✔] Dnsdumpster
-[✔] Rapiddns
-[✔] Choas
-[✔] Permutations, Mutations, Alterations
 
  [✔] Crt.sh 
  [✔] Web.Archive.org 
