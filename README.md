@@ -5,7 +5,7 @@
 ## Introduction
 
 **SubzzZ**
-to find possible subdomains using passive recon. Tool also support Permutations, Mutations, Alterations.
+can find possible subdomains using passive recon. Tool also support Permutations, Mutations, Alterations.
 
 ## Passive Recon via:
 
