@@ -10,28 +10,57 @@ to find possible subdomains using passive recon. Tool also support Permutations,
 
 ## Passive Recon via:
 
-[&#9745;] llll
-
-[&#9745;] llll1
+[✔] Crt.sh 
 
 
-- [✔] Crt.sh 
-- [✔] Web.Archive.org 
-- [✔] Dns.bufferover.run 
-- [✔] Threatcrowd.org 
-- [✔] Hackertarget.com 
-- [✔] Certspotter.com 
-- [✔] Anubis-DB(jonlu.ca) 
-- [✔] Virustotal  
-- [✔] Alienvault(otx) 
-- [✔] Urlscan.io  
-- [✔] Threatminer  
-- [✔] Entrust.com  
-- [✔] Riddler.io  
-- [✔] Dnsdumpster 
-- [✔] Rapiddns 
-- [✔] Choas 
-- [✔] Permutations, Mutations, Alterations  
+[✔] Web.Archive.org 
+
+
+[✔] Dns.bufferover.run 
+
+
+[✔] Threatcrowd.org 
+
+
+[✔] Hackertarget.com 
+
+
+[✔] Certspotter.com 
+
+
+[✔] Anubis-DB(jonlu.ca) 
+
+
+[✔] Virustotal  
+
+
+[✔] Alienvault(otx) 
+
+
+[✔] Urlscan.io  
+
+
+[✔] Threatminer  
+
+
+[✔] Entrust.com  
+
+
+[✔] Riddler.io  
+
+
+[✔] Dnsdumpster 
+
+
+[✔] Rapiddns 
+
+
+[✔] Choas 
+
+
+[✔] Permutations, Mutations, Alterations  
+
+
 
 ## Usage
 ```
