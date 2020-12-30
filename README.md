@@ -5,7 +5,7 @@
 **SubzzZ**
 to find possible subdomains using passive recon. Tool also support Permutations, Mutations, Alterations.
 
-## Passive Recon Via:
+## Passive Recon via:
 - [✔] Crt.sh 
 - [✔] Web.Archive.org 
 - [✔] Dns.bufferover.run 
