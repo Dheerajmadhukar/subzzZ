@@ -1,5 +1,5 @@
 #!/bin/bash
-
+#clear
 # Colours
 red="\e[31m"
 green="\e[32m"
@@ -9,98 +9,105 @@ normal=$(tput sgr0)
 right=$(printf '\xE2\x9C\x94')
 end="\e[0m"
 
-echo "💀💀💀💀💀💀💀💀💀"
-echo -e "💀${bold}$green Have a beer🍺💀 $end${normal}"
-echo "💀💀💀💀💀💀💀💀💀"
-echo -e "       ${bold}- twitter.com/Dheerajmadhukar : @me_dheeraj${normal}"
-echo ""
+banner() {
+[ "$silent" == False ] && echo "💀💀💀💀💀💀💀💀💀"
+[ "$silent" == False ] && echo -e "💀${bold}$green Have a beer🍺💀 $end${normal}"
+[ "$silent" == False ] && echo "💀💀💀💀💀💀💀💀💀"
+[ "$silent" == False ] && echo -e "     ${bold}- twitter.com/Dheerajmadhukar : @me_dheeraj${normal}"
+[ "$silent" == False ] && echo ""
+}
 # Usage
 Usage() {
         echo -e "$green
         Usage: ./subzzZ [-d/--domain] target.com
+                -s / --silent : Only print raw data
         "$end
         exit 1
 }
 get_subzzZ() {
-echo -e ">> \e[36msubzzZ\e[0m is in progress"
+[ "$silent" == False ] && echo -e ">> \e[36msubzzZ\e[0m is in progress"
 folder=$target-$(date '-I')
 rm -rf "scans/$folder" &> /dev/null
 mkdir -p "scans/$folder" && cd "scans/$folder"
 
 #CRT.SH
 curl -s "https://crt.sh/?q=%25.$target&output=json"| jq -r '.[].name_value' 2>/dev/null | sed 's/\*\.//g' | sort -u | grep -o "\w.*$target" > $target-crt_domains.txt
-echo -e "[$right] Crt.sh Over => $(wc -l $target-crt_domains.txt|awk '{ print $1}')"
+[ "$silent" == False ] && echo -e "[$right] Crt.sh Over => $(wc -l $target-crt_domains.txt|awk '{ print $1}')"
 #WAY-ARCHIVE
 curl -s "http://web.archive.org/cdx/search/cdx?url=*.$target/*&output=text&fl=original&collapse=urlkey" | sed -e 's_https*://__' -e "s/\/.*//" -e 's/:.*//' -e 's/^www\.//' |sort -u > $target-warchive_domains.txt
-echo "[$right] Web.Archive.org Over => $(wc -l $target-warchive_domains.txt|awk '{ print $1}')"
+[ "$silent" == False ] && echo "[$right] Web.Archive.org Over => $(wc -l $target-warchive_domains.txt|awk '{ print $1}')"
 #DNS-BUFFER
 curl -s "https://dns.bufferover.run/dns?q=.$target" | jq -r .FDNS_A[] 2>/dev/null | cut -d ',' -f2 | grep -o "\w.*$target" | sort -u > $target-dnsbuffer_domains.txt
 curl -s "https://dns.bufferover.run/dns?q=.$target" | jq -r .RDNS[] 2>/dev/null | cut -d ',' -f2 | grep -o "\w.*$target" | sort -u >> $target-dnsbuffer_domains.txt
 curl -s "https://tls.bufferover.run/dns?q=.$target" | jq -r .Results 2>/dev/null | cut -d ',' -f3 |grep -o "\w.*$target"| sort -u >> $target-dnsbuffer_domains.txt
-echo "[$right] Dns.bufferover.run Over => $(wc -l $target-dnsbuffer_domains.txt|awk '{ print $1}')"
+[ "$silent" == False ] && echo "[$right] Dns.bufferover.run Over => $(wc -l $target-dnsbuffer_domains.txt|awk '{ print $1}')"
 #Threatcrowd
 curl -s "https://www.threatcrowd.org/searchApi/v2/domain/report/?domain=$target"|jq -r '.subdomains' 2>/dev/null |grep -o "\w.*$target" > $target-threatcrowd_domains.txt
-echo "[$right] Threatcrowd.org Over => $(wc -l $target-threatcrowd_domains.txt|awk '{ print $1}')"
+[ "$silent" == False ] && echo "[$right] Threatcrowd.org Over => $(wc -l $target-threatcrowd_domains.txt|awk '{ print $1}')"
 #HackerTarget
 curl -s "https://api.hackertarget.com/hostsearch/?q=$target"|grep -o "\w.*$target"> $target-hackertarget_domains.txt
-echo "[$right] Hackertarget.com Over => $(wc -l $target-hackertarget_domains.txt | awk '{ print $1}')"
+[ "$silent" == False ] && echo "[$right] Hackertarget.com Over => $(wc -l $target-hackertarget_domains.txt | awk '{ print $1}')"
 #Certspotter
 curl -s "https://certspotter.com/api/v0/certs?domain=$target" | jq -r '.[].dns_names[]' 2>/dev/null | grep -o "\w.*$target" | sort -u > $target-certspotter_domains.txt
-echo "[$right] Certspotter.com Over => $(wc -l $target-certspotter_domains.txt | awk '{ print $1}')"
+[ "$silent" == False ] && echo "[$right] Certspotter.com Over => $(wc -l $target-certspotter_domains.txt | awk '{ print $1}')"
 #anubisdb
 curl -s "https://jldc.me/anubis/subdomains/$target" | jq -r '.' 2>/dev/null | grep -o "\w.*$target" > $target-anubisdb_domains.txt
-echo "[$right] Anubis-DB(jonlu.ca) Over => $(wc -l $target-anubisdb_domains.txt|awk '{ print $1}')"
+[ "$silent" == False ] && echo "[$right] Anubis-DB(jonlu.ca) Over => $(wc -l $target-anubisdb_domains.txt|awk '{ print $1}')"
 #virustotal
 curl -s "https://www.virustotal.com/ui/domains/$target/subdomains?limit=40"|jq -r '.' 2>/dev/null |grep id|grep -o "\w.*$target"|cut -d '"' -f3|egrep -v " " > $target-virustotal_domains.txt
-echo "[$right] Virustotal Over => $(wc -l $target-virustotal_domains.txt|awk '{ print $1}')"
+[ "$silent" == False ] && echo "[$right] Virustotal Over => $(wc -l $target-virustotal_domains.txt|awk '{ print $1}')"
 #alienvault
 curl -s "https://otx.alienvault.com/api/v1/indicators/domain/$target/passive_dns"|jq '.passive_dns[].hostname' 2>/dev/null |grep -o "\w.*$target"|sort -u > $target-alienvault_domains.txt
-echo "[$right] Alienvault(otx) Over => $(wc -l $target-alienvault_domains.txt|awk '{ print $1}')"
+[ "$silent" == False ] && echo "[$right] Alienvault(otx) Over => $(wc -l $target-alienvault_domains.txt|awk '{ print $1}')"
 #urlscan
 curl -s "https://urlscan.io/api/v1/search/?q=domain:$target"|jq '.results[].page.domain' 2>/dev/null |grep -o "\w.*$target"|sort -u > $target-urlscan_domains.txt
-echo "[$right] Urlscan.io Over => $(wc -l $target-urlscan_domains.txt|awk '{ print $1}')"
+[ "$silent" == False ] && echo "[$right] Urlscan.io Over => $(wc -l $target-urlscan_domains.txt|awk '{ print $1}')"
 #threatminer
 curl -s "https://api.threatminer.org/v2/domain.php?q=$target&rt=5" | jq -r '.results[]' 2>/dev/null |grep -o "\w.*$1"|sort -u > $target-threatminer_domains.txt
-echo "[$right] Threatminer Over => $(wc -l $target-threatminer_domains.txt|awk '{ print $1}')"
+[ "$silent" == False ] && echo "[$right] Threatminer Over => $(wc -l $target-threatminer_domains.txt|awk '{ print $1}')"
 #entrust
 curl -s "https://ctsearch.entrust.com/api/v1/certificates?fields=subjectDN&domain=$target&includeExpired=false&exactMatch=false&limit=5000" | jq -r '.[].subjectDN' 2>/dev/null |sed 's/cn=//g'|grep -o "\w.*$target"|sort -u > $target-entrust_domains.txt
-echo "[$right] Entrust.com Over => $(wc -l $target-entrust_domains.txt|awk '{ print $1}')"
+[ "$silent" == False ] && echo "[$right] Entrust.com Over => $(wc -l $target-entrust_domains.txt|awk '{ print $1}')"
 #riddler
 curl -s "https://riddler.io/search/exportcsv?q=pld:$target"| grep -o "\w.*$target"|awk -F, '{print $6}'|sort -u > $target-riddler_domains.txt
 curl -s "https://riddler.io/search/exportcsv?q=pld:$target"|cut -d "," -f6|grep $target|sort -u >>$target-riddler_domains.txt
-echo "[$right] Riddler.io Over => $(wc -l $target-riddler_domains.txt|awk '{ print $1}')"
+[ "$silent" == False ] && echo "[$right] Riddler.io Over => $(wc -l $target-riddler_domains.txt|awk '{ print $1}')"
 #dnsdumpster
 cmdtoken=$(curl -ILs https://dnsdumpster.com | grep csrftoken | cut -d " " -f2 | cut -d "=" -f2 | tr -d ";")
 curl -s --header "Host:dnsdumpster.com" --referer https://dnsdumpster.com --user-agent "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:45.0) Gecko/20100101 Firefox/45.0" --data "csrfmiddlewaretoken=$cmdtoken&targetip=$target" --cookie "csrftoken=$cmdtoken; _ga=GA1.2.1737013576.1458811829; _gat=1" https://dnsdumpster.com > dnsdumpster.html
 cat dnsdumpster.html|grep "https://api.hackertarget.com/httpheaders"|grep -o "\w.*$target"|cut -d "/" -f7|sort -u > $target-dnsdumper_domains.txt
 rm dnsdumpster.html
-echo "[$right] Dnsdumpster Over => $(wc -l $target-dnsdumper_domains.txt|awk '{ print $1}')"
+[ "$silent" == False ] && echo "[$right] Dnsdumpster Over => $(wc -l $target-dnsdumper_domains.txt|awk '{ print $1}')"
 #rapiddns
 curl -s "https://rapiddns.io/subdomain/$target?full=1#result" | grep -oaEi "https?://[^\"\\'> ]+" | grep $target | cut -d "/" -f3 | sort -u >$target-rapiddns_domains.txt
-echo "[$right] Rapiddns Over => $(wc -l $target-rapiddns_domains.txt|awk '{ print $1}')"
+[ "$silent" == False ] && echo "[$right] Rapiddns Over => $(wc -l $target-rapiddns_domains.txt|awk '{ print $1}')"
 #choas
 org=$(echo $target | cut -d. -f1)
 curl -sSfL "https://chaos-data.projectdiscovery.io/index.json" | grep "URL" | sed 's/"URL": "//;s/",//' | grep "$org" | while read host do;do curl -sSfL "$host" > /dev/null;done && for i in `ls -1 | grep .zip$`; do unzip $i > /dev/null; done && rm -f *.zip && cat $org*.txt > $target-choas_domains.txt
-echo "[$right] Choas Over => $(wc -l $target-choas_domains.txt|awk '{ print $1}')"
+[ "$silent" == False ] && echo "[$right] Choas Over => $(wc -l $target-choas_domains.txt|awk '{ print $1}')"
 
 sort -u *_domains.txt -o subdomains.txt
 cat subdomains.txt | rev | cut -d . -f 1-3 | rev | sort -u | grep -v '^[[:blank:]]*$' > root_subdomains.txt
 xargs -a subdomains.txt -I@ -P500 sh -c 'shuffledns -d "@" -silent -w ../../lists/words.txt -r ../../lists/resolvers.txt' > shuff-dns.txt
-echo "[$right] permutations, mutations, alterations Over => $(wc -l shuff-dns.txt | awk '{ print $1}')"
+[ "$silent" == False ] && echo "[$right] permutations, mutations, alterations Over => $(wc -l shuff-dns.txt | awk '{ print $1}')"
 find . -type f -name "*.txt" -not -name 'subdomains.txt' -not -name 'root_subdomains.txt' -not -name 'shuff-dns.txt' -delete
+
 }
+
 get_alive() {
-echo -e ">> \e[36mAlive Domain Filteration\e[0m is in progress"
+[ "$silent" == False ] && echo -e ">> \e[36mAlive Domain Filteration\e[0m is in progress"
 cat *.txt | sort -u > raw-domains.txt
 cat raw-domains.txt | httpx -ports 80,443,81,8443,8080,8000,10000,9000 -silent -threads 1000 | tee -a alive.txt
-echo -e "[$right]"$bold"Done.💀"$end
-echo -e ">> \e[36mAlive Filteration JSON\e[0m is in progress"
+[ "$silent" == False ] && echo -e "[$right]"$bold"Done.💀"$end
+[ "$silent" == False ] && echo -e ">> \e[36mAlive Filteration JSON\e[0m is in progress"
 cat alive.txt | python3 -c "import sys; import json; print (json.dumps({'domains':list(sys.stdin)}))" >alive.json
-echo -e "[$right]"$bold"Done.💀"$end
-find . -type f -name "*.txt" -not -name 'alive.txt' -not -name 'alive.json' -not -name 'root_subdomains.txt' -delete
+[ "$silent" == False ] && echo -e "[$right]"$bold"Done.💀"$end
+find . -type f -name "*.txt" -not -name 'alive.txt' -not -name 'alive.json' -delete
 }
 target=False
+silent=False
 list=(
+        banner
         get_subzzZ
         get_alive
 )
@@ -110,6 +117,8 @@ while [ -n "$1" ]; do
                         target=$2
                         shift
                         ;;
+                        -s | --silent)
+                        silent=True ;;
                         *) echo -e $red"[-]"$end "Unknown Option: $1"
                         Usage
                         ;;
@@ -121,6 +130,7 @@ echo -e $red"[-]"$end "Argument: ./subzzZ [-d/--domain] required"
 Usage
 }
 (
+        banner
         get_subzzZ
         get_alive
 )
