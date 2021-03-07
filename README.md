@@ -58,7 +58,7 @@ can find possible subdomains using passive recon. Tool also support Permutations
 
 [✔] Choas 
 
-## Passive Recon via:
+## Active Recon via:
 
 [✔] Permutations, Mutations, Alterations  
 
